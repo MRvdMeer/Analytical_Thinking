@@ -63,8 +63,8 @@ results_summary <- results %>% group_by(prob) %>%
 
 print(results_summary, n = 21)
 
-ggplot(data = results_summary, aes(x = prob, y = num_wins)) + geom_line(col = "blue") + theme_bw()
-ggplot(data = results_summary, aes(x = prob, y = avg_shots)) + geom_line(col = "red") + theme_bw()
+ggplot(data = results_summary, aes(x = prob, y = num_wins)) + geom_line(col = "blue") + theme_bw() + ggtitle("number of wins vs. probability of making a shot")
+ggplot(data = results_summary, aes(x = prob, y = avg_shots)) + geom_line(col = "red") + theme_bw() + ggtitle("number of shots taken vs. probability of making a shot")
 ggplot(data = results_summary, aes(x = prob, y = win_pct)) + geom_line(col = "orange") + theme_bw()
 ggplot(data = results_summary, aes(x = prob, y = shot_pct)) + geom_line(col = "green") + theme_bw()
 
