@@ -53,7 +53,8 @@ table(results$result)
 ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~prob, nrow = 5) + theme_bw()
 ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~result) + theme_bw()
 ggplot(data = results, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
-ggplot(data = results, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw() + labs(x = "result", y = "number of shots", title = "distribution of game length")
+ggplot(data = results, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw() + 
+    labs(x = "result", y = "number of shots", title = "distribution of game length")
 
 results_summary <- results %>% group_by(prob) %>% 
     summarize(avg_shots = mean(count),
@@ -63,8 +64,10 @@ results_summary <- results %>% group_by(prob) %>%
 
 print(results_summary, n = 21)
 
-ggplot(data = results_summary, aes(x = prob, y = num_wins)) + geom_line(col = "blue") + theme_bw() + ggtitle("number of wins vs. probability of making a shot")
-ggplot(data = results_summary, aes(x = prob, y = avg_shots)) + geom_line(col = "red") + theme_bw() + ggtitle("length of the drill vs. probability of making a shot")
+ggplot(data = results_summary, aes(x = prob, y = num_wins)) + geom_line(col = "blue") + theme_bw() + 
+    ggtitle("number of wins vs. probability of making a shot")
+ggplot(data = results_summary, aes(x = prob, y = avg_shots)) + geom_line(col = "red") + theme_bw() + 
+    ggtitle("length of the drill vs. probability of making a shot")
 ggplot(data = results_summary, aes(x = prob, y = win_pct)) + geom_line(col = "orange") + theme_bw()
 ggplot(data = results_summary, aes(x = prob, y = shot_pct)) + geom_line(col = "green") + theme_bw()
 
