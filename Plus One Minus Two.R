@@ -30,7 +30,7 @@ simulate_drill <- function(num_drills = 1000, ...) {
 }
 
 # typical usage:
-# simulate.drill(num_drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = .5)
+# simulate_drill(num_drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = .5)
 
 x <- seq(from = 0, to = 1, by = .05)
 y <- NULL
