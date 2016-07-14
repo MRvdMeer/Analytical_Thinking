@@ -82,7 +82,7 @@ set.seed(12)
 for(i in x){
     results_zoom <- rbind(results_zoom, simulate_drill(num_drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = i))
 }
-results_zoom <- tbl_df(cbind(prob = y, results.zoom))
+results_zoom <- tbl_df(cbind(prob = y, results_zoom))
 rm(i, x, y)
 
 ggplot(data = results_zoom, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
