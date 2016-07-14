@@ -65,7 +65,8 @@ print(results.summary, n = 21)
 
 ggplot(data = results.summary, aes(x = prob, y = num.wins)) + geom_line(col = "blue") + theme_bw()
 ggplot(data = results.summary, aes(x = prob, y = avg.shots)) + geom_line(col = "red") + theme_bw()
-ggplot(data = results.summary, aes(x = prob, y = pct)) + geom_line(col = "orange") + theme_bw()
+ggplot(data = results.summary, aes(x = prob, y = win.pct)) + geom_line(col = "orange") + theme_bw()
+ggplot(data = results.summary, aes(x = prob, y = shot.pct)) + geom_line(col = "green") + theme_bw()
 
 # Now let's zoom in a bit more between prob = .6 and prob = .7
 
@@ -98,4 +99,5 @@ print(results.zoom.sum, n = 21)
 
 ggplot(data = results.zoom.sum, aes(x = prob, y = num.wins)) + geom_line(col = "blue") + theme_bw()
 ggplot(data = results.zoom.sum, aes(x = prob, y = avg.shots)) + geom_line(col = "red") + theme_bw()
-ggplot(data = results.zoom.sum, aes(x = prob, y = pct)) + geom_line(col = "orange") + theme_bw()
+ggplot(data = results.zoom.sum, aes(x = prob, y = win.pct)) + geom_line(col = "orange") + theme_bw()
+ggplot(data = results.zoom.sum, aes(x = prob, y = shot.pct)) + geom_line(col = "green") + theme_bw()
