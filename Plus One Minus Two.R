@@ -54,7 +54,7 @@ ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "re
 ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~result) + theme_bw()
 ggplot(data = results, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
 ggplot(data = results, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw() + 
-    labs(x = "result", y = "number of shots", title = "distribution of game length")
+    labs(x = "result", y = "number of shots", title = "distribution of game length") + theme(legend.position = "none")
 
 results_summary <- results %>% group_by(prob) %>% 
     summarize(avg_shots = mean(count),
