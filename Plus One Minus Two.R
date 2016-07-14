@@ -2,7 +2,7 @@
 library(ggplot2)
 library(dplyr)
 
-run.drill <- function(upper = 10, lower = -10, plus = 1, minus = -2, prob = .5) {
+run_drill <- function(upper = 10, lower = -10, plus = 1, minus = -2, prob = .5) {
     # prob represents the probability of making a shot
     
     score <- 0
@@ -20,17 +20,17 @@ run.drill <- function(upper = 10, lower = -10, plus = 1, minus = -2, prob = .5) 
     tbl_df(data.frame(result = result, count = count, pct = made / count))
 }
 
-simulate.drill <- function(num.drills = 1000, ...) {
+simulate_drill <- function(num_drills = 1000, ...) {
     # initialize
-    outcome <- run.drill(...)
-    for(i in 1:(num.drills-1)){
-        outcome <- rbind(outcome, run.drill(...))
+    outcome <- run_drill(...)
+    for(i in 1:(num_drills-1)){
+        outcome <- rbind(outcome, run_drill(...))
     }
     outcome
 }
 
 # typical usage:
-# simulate.drill(num.drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = .5)
+# simulate.drill(num_drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = .5)
 
 x <- seq(from = 0, to = 1, by = .05)
 y <- NULL
@@ -42,7 +42,7 @@ for(i in x){
 results <- NULL
 set.seed(12)
 for(i in x){
-    results <- rbind(results, simulate.drill(num.drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = i))
+    results <- rbind(results, simulate_drill(num_drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = i))
 }
 results <- tbl_df(cbind(prob = y, results))
 rm(i, x, y)
@@ -55,18 +55,18 @@ ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "re
 ggplot(data = results, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
 ggplot(data = results, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw()
 
-results.summary <- results %>% group_by(prob) %>% 
-    summarize(avg.shots = mean(count),
-              num.wins = sum(result),
-              win.pct = num.wins / 1000,
-              shot.pct = weighted.mean(pct, count))
+results_summary <- results %>% group_by(prob) %>% 
+    summarize(avg_shots = mean(count),
+              num_wins = sum(result),
+              win_pct = num_wins / 1000,
+              shot_pct = weighted.mean(pct, count))
 
-print(results.summary, n = 21)
+print(results_summary, n = 21)
 
-ggplot(data = results.summary, aes(x = prob, y = num.wins)) + geom_line(col = "blue") + theme_bw()
-ggplot(data = results.summary, aes(x = prob, y = avg.shots)) + geom_line(col = "red") + theme_bw()
-ggplot(data = results.summary, aes(x = prob, y = win.pct)) + geom_line(col = "orange") + theme_bw()
-ggplot(data = results.summary, aes(x = prob, y = shot.pct)) + geom_line(col = "green") + theme_bw()
+ggplot(data = results_summary, aes(x = prob, y = num_wins)) + geom_line(col = "blue") + theme_bw()
+ggplot(data = results_summary, aes(x = prob, y = avg_shots)) + geom_line(col = "red") + theme_bw()
+ggplot(data = results_summary, aes(x = prob, y = win_pct)) + geom_line(col = "orange") + theme_bw()
+ggplot(data = results_summary, aes(x = prob, y = shot_pct)) + geom_line(col = "green") + theme_bw()
 
 # Now let's zoom in a bit more between prob = .6 and prob = .7
 
@@ -77,27 +77,27 @@ for(i in x){
     y <- c(y, rep(i, 1000))
 }
 
-results.zoom <- NULL
+results_zoom <- NULL
 set.seed(12)
 for(i in x){
-    results.zoom <- rbind(results.zoom, simulate.drill(num.drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = i))
+    results_zoom <- rbind(results_zoom, simulate_drill(num_drills = 1000, upper = 10, lower = -10, plus = 1, minus = -2, prob = i))
 }
-results.zoom <- tbl_df(cbind(prob = y, results.zoom))
+results_zoom <- tbl_df(cbind(prob = y, results.zoom))
 rm(i, x, y)
 
-ggplot(data = results.zoom, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
-ggplot(data = results.zoom, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw()
+ggplot(data = results_zoom, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
+ggplot(data = results_zoom, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw()
 
 
-results.zoom.sum <- results.zoom %>% group_by(prob) %>% 
-    summarize(avg.shots = mean(count),
-              num.wins = sum(result),
-              win.pct = num.wins/1000,
-              shot.pct = weighted.mean(pct, count))
+results_zoom_summary <- results_zoom %>% group_by(prob) %>% 
+    summarize(avg_shots = mean(count),
+              num_wins = sum(result),
+              win_pct = num_wins/1000,
+              shot_pct = weighted.mean(pct, count))
 
-print(results.zoom.sum, n = 21)
+print(results_zoom_summary, n = 21)
 
-ggplot(data = results.zoom.sum, aes(x = prob, y = num.wins)) + geom_line(col = "blue") + theme_bw()
-ggplot(data = results.zoom.sum, aes(x = prob, y = avg.shots)) + geom_line(col = "red") + theme_bw()
-ggplot(data = results.zoom.sum, aes(x = prob, y = win.pct)) + geom_line(col = "orange") + theme_bw()
-ggplot(data = results.zoom.sum, aes(x = prob, y = shot.pct)) + geom_line(col = "green") + theme_bw()
+ggplot(data = results_zoom_summary, aes(x = prob, y = num_wins)) + geom_line(col = "blue") + theme_bw()
+ggplot(data = results_zoom_summary, aes(x = prob, y = avg_shots)) + geom_line(col = "red") + theme_bw()
+ggplot(data = results_zoom_summary, aes(x = prob, y = win_pct)) + geom_line(col = "orange") + theme_bw()
+ggplot(data = results_zoom_summary, aes(x = prob, y = shot_pct)) + geom_line(col = "green") + theme_bw()
